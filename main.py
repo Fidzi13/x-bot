@@ -1,8 +1,3 @@
-# Render Bot Package (Siap Deploy)
-
-## main.py
-
-```python
 import os
 import time
 import random
@@ -23,7 +18,6 @@ HEADERS = {
     "content-type": "application/json"
 }
 
-
 def get_tweets(user):
     url = f"https://api.twitter.com/2/timeline/profile/{user}.json"
     try:
@@ -31,7 +25,6 @@ def get_tweets(user):
         return r.json()
     except:
         return None
-
 
 def extract_tweet_ids(data):
     ids = []
@@ -43,7 +36,6 @@ def extract_tweet_ids(data):
     except:
         return []
 
-
 def comment(tweet_id, text):
     url = "https://api.twitter.com/1.1/statuses/update.json"
     payload = {
@@ -54,16 +46,14 @@ def comment(tweet_id, text):
     r = requests.post(url, headers=HEADERS, json=payload)
     return r.status_code, r.text
 
-
 def random_comment():
     CTA = random.choice(CTA_LINKS)
     comments = [
         f"This is really interesting! Check this out too: {CTA}",
         f"Great post! You might want to see this as well: {CTA}",
-        f"Love this! Sharing something useful here: {CTA}",
+        f"Love this! Sharing something useful here: {CTA}"
     ]
     return random.choice(comments)
-
 
 if __name__ == "__main__":
     print("Bot started...")
@@ -82,37 +72,6 @@ if __name__ == "__main__":
                 print(status, res)
                 time.sleep(random.randint(5, 12))
 
-        sleep_time = random.randint(300, 600)  # 5–10 menit
+        sleep_time = random.randint(300, 600)
         print(f"Sleeping {sleep_time} sec...\n")
         time.sleep(sleep_time)
-```
-
----
-
-## requirements.txt
-
-```
-requests
-python-dotenv
-```
-
----
-
-## Procfile
-
-```
-worker: python main.py
-```
-
----
-
-## .env example
-
-```
-AUTH_TOKEN=isi_disini
-CT0=isi_disini
-BEARER=AAAAAAAAAAAAAAAAAAAAANRILgAAAAA...
-ACCOUNTS=elonmusk,binance,solana,layerzero_labs
-CTA_LINKS=https://short.id/a1;https://short.id/a2;https://short.id/a3
-MODE=C
-```
